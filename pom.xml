@@ -27,7 +27,7 @@
 
     <properties>
         <!-- TODO: Next time bump it up to the LTS version. -->
-        <sonar.plugin.api.version>10.7.0.2191</sonar.plugin.api.version>
+        <sonar.plugin.api.version>13.0.0.3026</sonar.plugin.api.version>
         <sonarjava.version>8.0.1.36337</sonarjava.version>
         <!-- Don't forget to update this version of JaCoCo -->
         <jacoco.version>0.8.13</jacoco.version>
@@ -144,6 +144,7 @@
             <plugin>
                 <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
                 <artifactId>sonar-packaging-maven-plugin</artifactId>
+<!--                <version>1.23.0.740</version>-->
                 <extensions>true</extensions>
                 <configuration>
                     <pluginKey>bitkernel-gtt-java-rules</pluginKey>

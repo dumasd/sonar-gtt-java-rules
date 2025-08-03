@@ -16,6 +16,7 @@
  */
 package tech.bitkernel.devops.sonar.java.checks;
 
+import org.sonar.check.Priority;
 import org.sonar.check.Rule;
 import org.sonar.plugins.java.api.IssuableSubscriptionVisitor;
 import org.sonar.plugins.java.api.tree.ClassTree;
@@ -25,7 +26,7 @@ import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 
-@Rule(key = "GttBackendNaming")
+@Rule(key = "GttBackendNaming", name = "GttBackendNaming", description = "Check the code style compliance of the Gtt project.", priority = Priority.MAJOR)
 public class GttBackendNamingDispatcher extends IssuableSubscriptionVisitor {
 
     private static final List<String> V1_BASE_PACKAGES = Arrays.asList(
