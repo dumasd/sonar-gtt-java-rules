@@ -46,5 +46,13 @@ public class GttBackendNamingDispatcherTest {
                 .verifyIssues();
     }
 
+    @Test
+    public void testWithPackageIssues() {
+        GttBackendNamingDispatcher dispatcher = new GttBackendNamingDispatcher();
+        CheckVerifier.newVerifier()
+                .onFile("src/test/files/gtt/demo/order/api/endpoint/ViolationPackageController.java")
+                .withCheck(dispatcher)
+                .verifyIssues();
+    }
 
 }
