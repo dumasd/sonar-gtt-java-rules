@@ -22,14 +22,16 @@ import org.sonar.api.server.rule.RulesDefinitionAnnotationLoader;
 
 public class GttJavaRulesDefinition implements RulesDefinition {
 
-    public static final String REPOSITORY_KEY = "bitkernel-gtt-java";
+    public static final String REPOSITORY_KEY = "BitkernelGttJava";
 
-    public static final String REPOSITORY_NAME = "Bitkernel GTT Repository";
+    public static final String REPOSITORY_NAME = "BitkernelGttJava";
+
 
     @Override
     public void define(Context context) {
         NewRepository repository = context.createRepository(REPOSITORY_KEY, "java").setName(REPOSITORY_NAME);
-        new RulesDefinitionAnnotationLoader().load(repository, RulesList.getChecks().toArray(new Class[]{}));
+        new RulesDefinitionAnnotationLoader()
+                .load(repository, RulesList.getChecks().toArray(new Class[]{}));
         repository.done();
     }
 }

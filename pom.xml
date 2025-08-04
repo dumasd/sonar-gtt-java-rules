@@ -9,21 +9,34 @@
         <version>83.0.0.2369</version>
     </parent>
 
-    <!-- Change this groupId to your own organization groupId -->
     <groupId>tech.bitkernel.devops</groupId>
-
-    <!-- Change this artifactId to your own organization artifactId -->
     <artifactId>sonar-gtt-java-rules</artifactId>
-
     <version>1.0.0-SNAPSHOT</version>
-
     <packaging>sonar-plugin</packaging>
-
-    <!--  Change the name of the plugin here -->
     <name>Bitkernel GTT Java Rules</name>
-
-    <!--  Change the description of the plugin here -->
     <description>Bitkernel GTT Java Rules</description>
+
+    <url>https://github.com/dumasd/sonar-gtt-java-rules/</url>
+    <licenses>
+        <license>
+            <name>GNU GENERAL PUBLIC LICENSE 3</name>
+            <url>https://opensource.org/license/gpl-3-0</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <id>thinkerwolf</id>
+            <name>thinkerwolf</name>
+            <email>wukai213@gmail.com</email>
+            <url>https://github.com/thinkerwolf</url>
+        </developer>
+    </developers>
+    <scm>
+        <url>https://github.com/dumasd/sonar-gtt-java-rules/</url>
+    </scm>
+    <issueManagement>
+        <url>https://github.com/dumasd/sonar-gtt-java-rules/issues/</url>
+    </issueManagement>
 
     <properties>
         <!-- TODO: Next time bump it up to the LTS version. -->
@@ -144,7 +157,7 @@
             <plugin>
                 <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
                 <artifactId>sonar-packaging-maven-plugin</artifactId>
-<!--                <version>1.23.0.740</version>-->
+                <!--                <version>1.23.0.740</version>-->
                 <extensions>true</extensions>
                 <configuration>
                     <pluginKey>bitkernel-gtt-java-rules</pluginKey>
