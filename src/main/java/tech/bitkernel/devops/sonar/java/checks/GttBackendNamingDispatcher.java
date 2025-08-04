@@ -39,12 +39,14 @@ public class GttBackendNamingDispatcher extends IssuableSubscriptionVisitor {
             "app.controller",
             "app.filter",
             "bean.bo",
-            "bean.command.",
+            "bean.command",
             "bean.dto",
             "core.util",
             "core.constant",
             "core.dao",
             "core.entity",
+            "core.client",
+            "core.exception",
             "core.service"
     );
 
@@ -58,11 +60,13 @@ public class GttBackendNamingDispatcher extends IssuableSubscriptionVisitor {
             "app",
             "app.config",
             "app.filter",
+            "core.client",
             "core.service",
             "core.bo",
             "core.constant",
             "core.util",
             "core.mapper",
+            "core.exception",
             "repo.dao",
             "repo.entity"
     );

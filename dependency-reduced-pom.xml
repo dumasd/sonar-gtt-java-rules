@@ -13,6 +13,27 @@
   <name>Bitkernel GTT Java Rules</name>
   <version>1.0.0-SNAPSHOT</version>
   <description>Bitkernel GTT Java Rules</description>
+  <url>https://github.com/dumasd/sonar-gtt-java-rules/</url>
+  <issueManagement>
+    <url>https://github.com/dumasd/sonar-gtt-java-rules/issues/</url>
+  </issueManagement>
+  <developers>
+    <developer>
+      <id>thinkerwolf</id>
+      <name>thinkerwolf</name>
+      <email>wukai213@gmail.com</email>
+      <url>https://github.com/thinkerwolf</url>
+    </developer>
+  </developers>
+  <licenses>
+    <license>
+      <name>GNU GENERAL PUBLIC LICENSE 3</name>
+      <url>https://opensource.org/license/gpl-3-0</url>
+    </license>
+  </licenses>
+  <scm>
+    <url>https://github.com/dumasd/sonar-gtt-java-rules/</url>
+  </scm>
   <build>
     <resources>
       <resource>
