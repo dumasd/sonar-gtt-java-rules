@@ -21,6 +21,7 @@ import org.sonar.plugins.java.api.JavaFileScannerContext;
 import org.sonar.plugins.java.api.tree.AnnotationTree;
 import org.sonar.plugins.java.api.tree.ClassTree;
 import org.sonar.plugins.java.api.tree.MethodTree;
+import org.sonar.plugins.java.api.tree.ParameterizedTypeTree;
 import org.sonar.plugins.java.api.tree.Tree;
 import org.sonar.plugins.java.api.tree.TypeTree;
 import org.sonar.plugins.java.api.tree.VariableTree;
@@ -78,15 +79,26 @@ public abstract class AbstractGttBackendNamingRule {
         return API_RESPONSE_TYPES.stream().anyMatch(name::equals);
     }
 
-    protected boolean isValidOpenAPIRequest(VariableTree variableTree) {
+    protected void visitOpenAPIRequest(VariableTree variableTree) {
         String name = variableTree.type().symbolType().name();
         List<AnnotationTree> annotationTrees = variableTree.modifiers().annotations();
         // RequestBody
         boolean requestBody = annotationTrees.stream().anyMatch(e -> "RequestBody".equals(e.symbolType().name()));
         if (requestBody) {
-            return API_REQUEST_TYPES.stream().anyMatch(name::endsWith);
+            if (variableTree.type().is(Tree.Kind.PARAMETERIZED_TYPE)) {
+                ParameterizedTypeTree parameterizedTypeTree = (ParameterizedTypeTree) variableTree.type();
+                if (parameterizedTypeTree.typeArguments().isEmpty()) {
+                    context.reportIssue(javaCheck, variableTree, "Raw use of OpenAPI method parameter");
+                } else {
+                    String parameterizedTypeName = parameterizedTypeTree.typeArguments().get(0).symbolType().name();
+                    if (API_REQUEST_TYPES.stream().noneMatch(parameterizedTypeName::endsWith)) {
+                        context.reportIssue(javaCheck, variableTree, String.format("OpenAPI method parameter's generic type must be %s", API_REQUEST_TYPES));
+                    }
+                }
+            } else if (API_REQUEST_TYPES.stream().noneMatch(name::endsWith)) {
+                context.reportIssue(javaCheck, variableTree, String.format("OpenAPI method parameter must be %s", API_REQUEST_TYPES));
+            }
         }
-        return true;
     }
 
     protected abstract void visit();
@@ -134,10 +146,7 @@ public abstract class AbstractGttBackendNamingRule {
 
         List<VariableTree> parameters = methodTree.parameters();
         for (VariableTree variableTree : parameters) {
-            if (!isValidOpenAPIRequest(variableTree)) {
-                String message = String.format("OpenAPI method parameter must be %s", API_REQUEST_TYPES);
-                context.reportIssue(javaCheck, variableTree, message);
-            }
+            visitOpenAPIRequest(variableTree);
         }
     }
 

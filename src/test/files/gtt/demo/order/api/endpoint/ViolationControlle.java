@@ -72,5 +72,15 @@ public class ViolationControlle { // Noncompliant {{OpenAPI class must be interf
     batchQueryStream(@RequestBody ApiSubQueryRequest request // Compliant
     );
 
+
+    @Operation(summary = "Query Stream Pssh", description = "Query Stream Pssh,app query") // Compliant
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "successful operation", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = BatchDrmStreamPsshDataResponseDTO.class))})
+    @PostMapping(value = "/stream/batch-query/v1", consumes = {"application/json"}, produces = {"application/json"})
+        // Compliant
+    ApiSubQueryResponse  // Compliant
+    batchQueryStreamA(@RequestBody List<ApiSubQueryDT> request // Noncompliant {{OpenAPI method parameter's generic type must be [BO, DTO, Command, Query, ApiSubQueryRequest, ApiSubQueryCountRequest]}}
+    );
+
     ApiSubQueryResponse batchQueryStream2(@RequestBody ApiSubQueryRequest request); // Noncompliant {{OpenAPI method must hava @Operation annotation}} {{OpenAPI method must hava @xxxMapping annotation}}
 }
