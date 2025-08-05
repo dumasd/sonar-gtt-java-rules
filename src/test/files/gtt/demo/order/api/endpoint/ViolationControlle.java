@@ -1,19 +1,4 @@
-/*
- * This file is part of Bitkernel GTT Java Rules.
- *
- * Bitkernel GTT Java Rules is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Bitkernel GTT Java Rules is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <https://www.gnu.org/licenses/>.
- */
+
 package gtt.demo.order.api.endpoint;
 
 import bikframework.web.domain.ApiResponse;
@@ -30,9 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 @RequestMapping("/api/demo/order") // Noncompliant {{OpenAPI class name must hava @Tag annotation}}
-public class ViolationControlle { // Noncompliant {{OpenAPI class must be interface}} {{OpenAPI class name must match regex: ^I.*Controller$}}
+public interface ViolationControlle { // Noncompliant {{OpenAPI class name must match regex: ^I.*Controller$}}
 
     /**
      * Query Stream License.

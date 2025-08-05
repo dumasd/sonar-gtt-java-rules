@@ -55,4 +55,13 @@ public class GttBackendNamingDispatcherTest {
                 .verifyIssues();
     }
 
+    @Test
+    public void testEntity() {
+        GttBackendNamingDispatcher dispatcher = new GttBackendNamingDispatcher();
+        CheckVerifier.newVerifier()
+                .onFile("src/test/files/gtt/demo/order/repo/entity/AppPluginComponentListConvert.java")
+                .withCheck(dispatcher)
+                .verifyIssues();
+    }
+
 }

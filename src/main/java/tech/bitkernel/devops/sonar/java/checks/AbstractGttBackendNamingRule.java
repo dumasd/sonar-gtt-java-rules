@@ -20,7 +20,9 @@ import org.sonar.plugins.java.api.JavaCheck;
 import org.sonar.plugins.java.api.JavaFileScannerContext;
 import org.sonar.plugins.java.api.tree.AnnotationTree;
 import org.sonar.plugins.java.api.tree.ClassTree;
+import org.sonar.plugins.java.api.tree.IdentifierTree;
 import org.sonar.plugins.java.api.tree.MethodTree;
+import org.sonar.plugins.java.api.tree.ModifiersTree;
 import org.sonar.plugins.java.api.tree.ParameterizedTypeTree;
 import org.sonar.plugins.java.api.tree.Tree;
 import org.sonar.plugins.java.api.tree.TypeTree;
@@ -104,20 +106,21 @@ public abstract class AbstractGttBackendNamingRule {
     protected abstract void visit();
 
     protected void visitOpenAPIClass() {
-        String simpleName = classTree.simpleName().name();
+        IdentifierTree simpledNameTree = classTree.simpleName();
+        ModifiersTree modifiersTree = classTree.modifiers();
 
         if (!classTree.is(Tree.Kind.INTERFACE)) {
-            context.reportIssue(javaCheck, classTree.simpleName(), "OpenAPI class must be interface");
-            //return;
+            context.reportIssue(javaCheck, classTree, "OpenAPI class must be interface");
         }
 
-        if (!API_ENDPOINT_CLASS_PATTERN.matcher(simpleName).matches()) {
-            context.reportIssue(javaCheck, classTree.simpleName(), "OpenAPI class name must match regex: " + API_ENDPOINT_CLASS_PATTERN.pattern());
+        if (simpledNameTree != null) {
+            if (!API_ENDPOINT_CLASS_PATTERN.matcher(simpledNameTree.name()).matches()) {
+                context.reportIssue(javaCheck, simpledNameTree, "OpenAPI class name must match regex: " + API_ENDPOINT_CLASS_PATTERN.pattern());
+            }
         }
 
-        List<AnnotationTree> annotationTrees = classTree.modifiers().annotations();
-        if (annotationTrees.stream().noneMatch(e -> "Tag".equals(e.symbolType().name()))) {
-            context.reportIssue(javaCheck, classTree, "OpenAPI class name must hava @Tag annotation");
+        if (modifiersTree.annotations().stream().noneMatch(e -> "Tag".equals(e.symbolType().name()))) {
+            context.reportIssue(javaCheck, modifiersTree, "OpenAPI class name must hava @Tag annotation");
         }
 
         for (Tree member : classTree.members()) {
@@ -155,9 +158,11 @@ public abstract class AbstractGttBackendNamingRule {
             context.reportIssue(javaCheck, classTree, "Controller must be class");
             return;
         }
-        String simpleName = classTree.simpleName().name();
-        if (!CONTROLLER_CLASS_PATTERN.matcher(simpleName).matches()) {
-            context.reportIssue(javaCheck, classTree, "Controller class name must match regex: " + CONTROLLER_CLASS_PATTERN.pattern());
+        IdentifierTree simpleNameTree = classTree.simpleName();
+        if (simpleNameTree != null) {
+            if (!CONTROLLER_CLASS_PATTERN.matcher(simpleNameTree.name()).matches()) {
+                context.reportIssue(javaCheck, classTree, "Controller class name must match regex: " + CONTROLLER_CLASS_PATTERN.pattern());
+            }
         }
     }
 
@@ -166,9 +171,11 @@ public abstract class AbstractGttBackendNamingRule {
             context.reportIssue(javaCheck, classTree, "Dao must be interface");
             return;
         }
-        String simpleName = classTree.simpleName().name();
-        if (!simpleName.endsWith("Repository")) {
-            context.reportIssue(javaCheck, classTree, "Dao class must end with 'Repository'");
+        IdentifierTree simpleNameTree = classTree.simpleName();
+        if (simpleNameTree != null) {
+            if (!simpleNameTree.name().endsWith("Repository")) {
+                context.reportIssue(javaCheck, classTree, "Dao class must end with 'Repository'");
+            }
         }
     }
 
@@ -177,9 +184,11 @@ public abstract class AbstractGttBackendNamingRule {
             context.reportIssue(javaCheck, classTree, "Dao must be class");
             return;
         }
-        String simpleName = classTree.simpleName().name();
-        if (!simpleName.endsWith("Entity")) {
-            context.reportIssue(javaCheck, classTree, "Entity class must end with 'Entity'");
+        IdentifierTree simpleNameTree = classTree.simpleName();
+        if (simpleNameTree != null) {
+            if (!simpleNameTree.name().endsWith("Entity")) {
+                context.reportIssue(javaCheck, classTree, "Entity class must end with 'Entity'");
+            }
         }
     }
 
